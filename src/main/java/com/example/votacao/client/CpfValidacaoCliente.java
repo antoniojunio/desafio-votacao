@@ -1,5 +1,6 @@
 package com.example.votacao.client;
 
+import com.example.votacao.exception.NotFoundException;
 import org.springframework.stereotype.Component;
 
 import java.util.Random;
@@ -9,15 +10,12 @@ public class CpfValidacaoCliente {
     private final Random random = new Random();
 
     public String verificarCpf(String cpf) {
-        if (isCpfValid(cpf)) {
-            return "ABLE_TO_VOTE";
-        } else {
-            return "UNABLE_TO_VOTE";
+        int randomValue = random.nextInt(3);
+
+        if (randomValue == 0) {
+            throw new NotFoundException("CPF inválido");
         }
-    }
 
-    private boolean isCpfValid(String cpf) {
-        return random.nextBoolean();
+        return (randomValue == 1) ? "ABLE_TO_VOTE" : "UNABLE_TO_VOTE";
     }
-
 }
